@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_blog, only: [:create, :destroy]
+  before_action :set_blog, only: %i[create destroy]
 
   def create
     @comment = @blog.comments.create(comment_params)
