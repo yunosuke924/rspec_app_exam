@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :project do
-    name { "MyString" }
-    status { 1 }
-    release_date { "2019-07-13" }
+    name { Faker::Lorem.word }
+    status { rand(3) }
+    from = Date.parse("2019/01/01")
+    to   = Date.parse("2019/12/31")
+    release_date { Random.rand(from..to) }
   end
 end
