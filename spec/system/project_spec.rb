@@ -13,6 +13,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content project.status
         expect(page).to have_content project.release_date
         expect(Project.count).to eq 1
+        expect(current_path).to eq projects_path
       end
     end
   end
@@ -31,6 +32,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content 'doing'
         expect(page).to have_content Date.new(2019, 01, 01)
         expect(Project.count).to eq 1
+        expect(current_path).to eq '/projects/1'
       end
     end
 
@@ -45,6 +47,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content '1 error prohibited this project from being saved:'
         expect(page).to have_content "Name can't be blank"
         expect(Project.count).to eq 0
+        expect(current_path).to eq projects_path
       end
     end
   end
@@ -57,6 +60,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content project.status
         expect(page).to have_content project.release_date
         expect(Project.count).to eq 1
+        expect(current_path).to eq project_path(project)
       end
     end
   end
@@ -76,6 +80,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content 'done'
         expect(page).to have_content Date.new(2019, 12, 01)
         expect(Project.count).to eq 1
+        expect(current_path).to eq project_path(project)
       end
     end
 
@@ -91,6 +96,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).to have_content '1 error prohibited this project from being saved:'
         expect(page).to have_content "Name can't be blank"
         expect(Project.count).to eq 1
+        expect(current_path).to eq project_path(project)
       end
     end
   end
@@ -107,6 +113,7 @@ RSpec.describe 'Project', type: :system do
         expect(page).not_to have_content project.status
         expect(page).not_to have_content project.release_date
         expect(Project.count).to eq 0
+        expect(current_path).to eq projects_path
       end
     end
   end
