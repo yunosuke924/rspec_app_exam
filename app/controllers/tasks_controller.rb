@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_project
 
   # GET /tasks
   def index
@@ -24,7 +25,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to [@project, @task], notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -33,7 +34,7 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -42,7 +43,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to project_tasks_url, notice: 'Task was successfully destroyed.'
   end
 
   private
@@ -51,8 +52,12 @@ class TasksController < ApplicationController
       @task = Task.find(params[:id])
     end
 
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:title, :status, :deadline, :completion_date, :project_id)
+      params.require(:task).permit(:title, :status, :deadline, :completion_date, :description).merge(project_id: params[:project_id])
     end
 end
