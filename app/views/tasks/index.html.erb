@@ -17,7 +17,7 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.status %></td>
-        <td><%= task.deadline.strftime('%Y-%m-%d %H:%M') if task.deadline? %></td>
+        <td><%= short_time(task.deadline) if task.deadline? %></td>
         <td><%= link_to 'Show', [@project, task] %></td>
         <td><%= link_to 'Edit', edit_project_task_path(@project, task) %></td>
         <td><%= link_to 'Destroy', [@project, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
