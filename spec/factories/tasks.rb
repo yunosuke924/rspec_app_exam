@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :task do
-    title { "MyString" }
-    status { 1 }
-    deadline { "2019-08-10 16:07:46" }
-    completion_date { "2019-08-10" }
-    project { nil }
+    title { 'Task' }
+    status { rand(2) }
+    from = Date.parse("2019/08/01")
+    to   = Date.parse("2019/12/31")
+    deadline { Random.rand(from..to) }
   end
 end
