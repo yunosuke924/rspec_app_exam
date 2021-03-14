@@ -5,12 +5,8 @@ RSpec.describe 'Task', type: :system do
   let(:task){create(:task, project_id: project.id)}
   describe 'Task一覧' do
     context '正常系' do
-      #let(:project){create(:project)}
-      #let(:task){create(:task, project_id: project.id)}
       it '一覧ページにアクセスした場合、Taskが表示されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id)
         visit project_tasks_path(project)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
@@ -19,8 +15,6 @@ RSpec.describe 'Task', type: :system do
 
       it 'Project詳細からTask一覧ページにアクセスした場合、Taskが表示されること' do
         # FIXME: テストが失敗するので修正してください
-        # project = FactoryBot.create(:project)
-        # task = FactoryBot.create(:task, project_id: project.id)
         visit project_path(project)
         click_on 'View Todos'
         switch_to_window(windows.last)
@@ -33,10 +27,8 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task新規作成' do
     context '正常系' do
-      #let(:project){create(:project)}
       it 'Taskが新規作成されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        #project = FactoryBot.create(:project)
         visit project_tasks_path(project)
         click_link 'New Task'
         fill_in 'Title', with: 'test'
@@ -50,12 +42,8 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task詳細' do
     context '正常系' do
-      #let(:project){create(:project)}
-      #let(:task){create(:task, project_id: project.id)}
       it 'Taskが表示されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id)
         visit project_task_path(project, task)
         expect(page).to have_content(task.title)
         expect(page).to have_content(task.status)
@@ -67,12 +55,8 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task編集' do
     context '正常系' do
-      #let(:project){create(:project)}
-      #let(:task){create(:task, project_id: project.id)}
       it 'Taskを編集した場合、一覧画面で編集後の内容が表示されること' do
         # FIXME: テストが失敗するので修正してください
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id)
         visit edit_project_task_path(project, task)
         fill_in 'Deadline', with: Time.current
         click_button 'Update Task'
@@ -83,8 +67,6 @@ RSpec.describe 'Task', type: :system do
 
       it 'ステータスを完了にした場合、Taskの完了日に今日の日付が登録されること' do
         # TODO: ローカル変数ではなく let を使用してください
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id)
         visit edit_project_task_path(project, task)
         select 'done', from: 'Status'
         click_button 'Update Task'
@@ -95,8 +77,6 @@ RSpec.describe 'Task', type: :system do
 
       it '既にステータスが完了のタスクのステータスを変更した場合、Taskの完了日が更新されないこと' do
         # TODO: FactoryBotのtraitを利用してください
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id, status: :done, completion_date: Time.current.yesterday)
         task = create(:task, :done_task, project_id: project.id)
         visit edit_project_task_path(project, task)
         select 'todo', from: 'Status'
@@ -109,13 +89,10 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe 'Task削除' do
-    #let(:project){create(:project)}
     let!(:task){create(:task, project_id: project.id)}
     context '正常系' do
       # FIXME: テストが失敗するので修正してください
       it 'Taskが削除されること' do
-        #project = FactoryBot.create(:project)
-        #task = FactoryBot.create(:task, project_id: project.id)
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
