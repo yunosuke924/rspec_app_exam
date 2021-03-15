@@ -62,6 +62,7 @@ RSpec.describe 'Task', type: :system do
         click_button 'Update Task'
         click_link 'Back'
         expect(find('.task_list')).to have_content(short_time(Time.current))
+        expect(find('.task_list')).to have_content task.title
         expect(current_path).to eq project_tasks_path(project)
       end
 
@@ -96,7 +97,8 @@ RSpec.describe 'Task', type: :system do
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
-        expect(page).not_to have_content "title: #{task.title}"
+        expect('.task-list').not_to have_content task.title
+        #expect(page).not_to have_content "title: #{task.title}"
         expect(Task.count).to eq 0
         expect(current_path).to eq project_tasks_path(project)
       end
